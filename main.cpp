@@ -5,18 +5,21 @@ using namespace std;
 
 class incasari {
     private:
+    //facem categori de incasari bazate pe categoria vehiculului
     int A;
     int B;
     int C;
     int D;
     int total;
     public:
+    //facem constructor pentru initializarea variabilelor A,B,C,D
     incasari() {
         this->A = 0;
         this->B = 0;
         this->C = 0;
         this->D = 0;
     }
+    //introducem valorile
     void input(int A,int B, int C, int D, int total) {
         this->A = A;
         this->B = B;
@@ -24,9 +27,11 @@ class incasari {
         this->D = D;
         this->total = total;
     }
+    //afisam variabilele si folosimm setw() pt a seta latimea campurilor
     void display() {
+        cout<<"\n--------------------------------------------------------------------------------------------\n";
         cout<<setw(10)<<"Categoria A:"<<setw(10)<<"Categotia B:"<<setw(10)<<"Categoria C:"<<setw(10)<<"Categoria D:";
-        cout<<endl;
+        cout<<"\n--------------------------------------------------------------------------------------------\n";
         cout<<setw(9)<<this->A<<' '<<setw(9)<<this->B<<' '<<setw(9)<<this->C<<' '<<setw(9)<<this->D<<endl;
     }
 
@@ -39,6 +44,7 @@ public:
     tip_vehicul() {
         strcpy(nume_tip_vehicul,"vehicul");
     }
+    //selectam tipul vehiculului
     void setare_tip_vehicul(incasari &Incasari) {
 while(1){
         cout<<"Selecteaza categoria vehiculuilui: "<<endl;
@@ -66,6 +72,7 @@ while(1){
             break;
         }
         else {
+            //in caz in care sunt date nevalide
             cout<<"Eroare la intrare"<<endl;
         }
 }
@@ -77,6 +84,7 @@ while(1){
 
 class vehicul:public tip_vehicul {
 private:
+    //stocam date despre vehicul in private
     int nr_vehicul;//numarul de intrare a vehiculuilui in baza de date a parcarii
     char nr_matriculare[10];
     char culoare[10];
@@ -86,8 +94,9 @@ private:
     char ora_iesire[10];
     incasari Incasari;
 public:
+    //constructorul vehicul() are rolul de a initializa toate variabilele clasei
     vehicul()
-{
+    {
     this->nr_vehicul = 0;
         strcpy(this->nr_matriculare,"default");
         strcpy(this->culoare,"default");
@@ -97,7 +106,8 @@ public:
         time(&tt);
         strcpy(this->ora_intrare,asctime(localtime(&tt)));
         strcpy(this->ora_iesire,asctime(localtime(&tt)));
-}
+    }
+    //introducem detaliile vehiculului
     void intrare(){
         cout<<"Introduceti numarul vehiculului "<<endl;
         cin>>nr_vehicul;
@@ -115,6 +125,8 @@ public:
         strcpy(this->ora_intrare,asctime(localtime(&tt)));
         strcpy(this->ora_iesire,asctime(localtime(&tt)));
     }
+
+    //afisarea
     void iesire() {
         cout<<"Numarul vehicului "<<nr_vehicul<<endl;
         cout<<"Numarul matriculare "<<nr_matriculare<<endl;
@@ -122,16 +134,18 @@ public:
     }
     void afisare_vehicul() {
         cout<<nr_vehicul<<' '<<marca<<' '<<culoare<<endl;
-        cout<<nr_vehicul;
         Incasari.display();
     }
+    //urmeaza sa implementez
     void adauga_vehicul();
     void adauga_in_lista();
-    void cautare_vehicul(int nr);
+    void cautare_vehicul(int nr);//nr-numarul vehiculului
     void stergere_vehicul(int nr);
+    void update(int nr);//u[tadatm starea vehiculului
 };
-//nu
-/*
+
+//deschidem fisierul in mod binar
+
 void vehicul::adauga_vehicul() {
     ofstream g;
     g.open("add_data.txt",ios_base::app|ios_base::binary);
@@ -139,6 +153,8 @@ void vehicul::adauga_vehicul() {
     g.write((char*)this,sizeof(*this));
     g.close();
 }
+
+//deschidem fisierul si citim obiectele din acesta
 
 void vehicul::adauga_in_lista() {
     ifstream f;
@@ -157,6 +173,8 @@ void vehicul::adauga_in_lista() {
         f.close();
     }
 }
+
+//cautam vehiculul, daca se gaseste nr de identificare, afisam vehiculul
 
 void vehicul::cautare_vehicul(int nr) {
     ifstream f;
@@ -180,6 +198,8 @@ void vehicul::cautare_vehicul(int nr) {
             cout<<"Lipsa date"<<endl;
     }
 }
+
+//cautam si stergem si actualizam fisierul, daca flg=0, nu am gasit vehiculul iar daca flg=1 am gasit si afisam "obiect sters"
 
 void vehicul::stergere_vehicul(int nr) {
     ifstream f;
@@ -217,16 +237,21 @@ void vehicul::stergere_vehicul(int nr) {
         }
     }
 }
-*/
+
+//facem functia de update a starii vehiculului
+void vehicul::update(int nr) {
+
+}
+
 
 int main()
 {
     system("cls");
     vehicul v;
-    v.intrare();
-    v.afisare_vehicul();
-    v.adauga_in_lista();
-    v.stergere_vehicul(100);
+    //v.intrare();
+    //v.afisare_vehicul();
+    //v.adauga_in_lista();
+    //v.stergere_vehicul(100);
     getch();
     return 0;
 }
